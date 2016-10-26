@@ -22,7 +22,7 @@ void list_destroy(List *list) {
 
     /** Remove each element. */
     while (list_size(list) > 0) {
-        /* *data是待删除的数据, 在链表中是链表元素的某个字段, 按引用传参需取&data指针的指针, void **做类型转换 */
+        /* 传引用声明的是指针,而不是指针指向的变量,因此调用时&取引用, void **作类型转换 */
         if (list_rem_next(list, NULL, (void **) &data) == 0 && list->destroy != NULL) {
             /* Call a user-defined function to free dynamically allocated data. */
             list->destroy(data);
