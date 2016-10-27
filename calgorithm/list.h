@@ -26,7 +26,7 @@ typedef struct List_ {
 /* Public Interface */
 void list_init(List *list, void (*destory)(void *data));
 
-void list_destory(List *list);
+void list_destroy(List *list);
 
 int list_ins_next(List *list, ListElmt *element, const void *data);
 
