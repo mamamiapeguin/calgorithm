@@ -175,29 +175,28 @@ static int insert(BisTree *tree, BiTreeNode **node, const void *data, int *balan
         avl_data->factor = AVL_BALANCED;
         avl_data->hidden = 0;
         avl_data->data = (void *) data;
+
+        return bitree_ins_left(tree, *node, avl_data);
     } else {
         /* Handle insertion into a tree that is not empty. */
         cmpval = tree->compare(data, ((AvlNode *) bitree_data(*node))->data);
         if (cmpval < 0) {
             /* Move to the left. */
             if (bitree_is_eob(bitree_left(*node))) {
-                /* Move to the left. */
-                if (bitree_is_eob(bitree_left(*node))) {
-                    if ((avl_data = (AvlNode *) malloc(sizeof(AvlNode))) == NULL)
-                        return -1;
+                if ((avl_data = (AvlNode *) malloc(sizeof(AvlNode))) == NULL)
+                    return -1;
 
-                    avl_data->factor = AVL_BALANCED;
-                    avl_data->hidden = 0;
-                    avl_data->data = (void *) data;
+                avl_data->factor = AVL_BALANCED;
+                avl_data->hidden = 0;
+                avl_data->data = (void *) data;
 
-                    if (bitree_ins_left(tree, *node, avl_data) != 0)
-                        return -1;
+                if (bitree_ins_left(tree, *node, avl_data) != 0)
+                    return -1;
 
-                    *balanced = 0;
-                } else {
-                    if ((retval = insert(tree, &bitree_left(*node), data, balanced)) != 0)
-                        return retval;
-                }
+                *balanced = 0;
+            } else {
+                if ((retval = insert(tree, &bitree_left(*node), data, balanced)) != 0)
+                    return retval;
             }
 
             /* Ensure that the tree remains balanced. */
