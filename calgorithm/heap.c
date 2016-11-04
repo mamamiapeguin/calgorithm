@@ -53,7 +53,7 @@ int heap_insert(Heap *heap, const void *data) {
         heap->tree = temp;
     }
 
-    /* Insert the nod eafter the last node. */
+    /* Insert the node after the last node. */
     heap->tree[heap_size(heap)] = (void *) data;
 
     /* Heapify the tree by pushing the contents of the now node upward. */
@@ -87,6 +87,10 @@ int heap_extract(Heap *heap, void **data) {
             mpos;
 
     /* Do not allow extraction from an empty heap. */
+    if (heap_size(heap) == 0)
+        return -1;
+
+    /* Extract the node at the top of the heap. */
     *data = heap->tree[0];
 
     /* Adjust the storage used by the heap. */
